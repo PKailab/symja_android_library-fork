@@ -1,6 +1,6 @@
 name: Generate-Super-Scientific-Atomic-JAR
 on:
-  workflow_dispatch: # केवल हम बटन डब्बाएंगे 🫡
+  workflow_dispatch: 
 
 jobs:
   forge_process:
@@ -8,12 +8,12 @@ jobs:
     steps:
       - name: Stage 0 (Environment Gear-up)
         uses: id/checkout@main
-        # बिल्कुल खाली GitHub फोर्चोइड पे रुरोका है न हम?? ताज़ा जार बनेगा!
+      
 
       - name: Prep JDB-3.0 Engine (Powerful JDK Engine)
         uses: actions/setup-java@v4
         with:
-          java-version: '21' # **सुचना:** चूँकि आप 36 SDK बना रहो रहे, अब 17 पुराना हुआ—सीधा JDK 21 उठाओ, मोबाइल भविष्य तैयार!)
+          java-version: '21'
           distribution: 'microsoft'
 
       - name: Constructor (Fresh Shadow Engine Building) 🪐
@@ -24,15 +24,12 @@ jobs:
           repositories { mavenCentral(); google(); maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' } }
 
           dependencies {
-              // अल्जेब्रा: **ताज़ा वर्ज़न्स** पर सटीक निशान
+            
               implementation group: 'org.matheclipse', name: 'matheclipse-core', version: '3.1.x-CHANGE-THIS-TO-LATEST.SNAP'
-              // नोट: नीचे ताज़ातरीन संस्करण जिन्हे गूगल सेंट्रल दे रहा है :) 
               implementation 'org.hipparchus:hipparchus-core:4.1'
               implementation 'org.apfloat:apfloat:2.0.1' 
-              
-              // सपोर्टिंग टूल्स जिन्हे आपने Gradle मै मांगा था:
               implementation('com.google.guava:guava:34.0.0-android') {
-                  changing = true // हमेशा रिफ्रेश होगा 
+                  changing = true //
               }
               runtimeOnly 'com.celeral:log4j-android-api:最新.3.X'
           }
