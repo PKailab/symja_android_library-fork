@@ -38,7 +38,7 @@ jobs:
           
           shadowJar {
               zip64 true
-              mergeServiceFiles() // ⚠️ ये हटा कर ही पक्का "FAT-JAR" असली वाला बनता है सेवा में
+              mergeServiceFiles() 
               archiveFileName = 'MASTER-COMMAND-MATH-3-6-NEW.jar'
               // पक्का सुरक्षा के लिए क्लासेस शेडिंग
               relocate 'org.apache.log4j', 'shadowsite.mathplugin.logger'
