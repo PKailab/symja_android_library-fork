@@ -1,0 +1,32 @@
+name: Build My Fat JAR (No Token)
+
+on:
+  workflow_dispatch: # बटन दबाते ही खुद काम शुरू करेगा
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 11
+        uses: actions/setup-java@v4
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Build Fat JAR (Skipping all Token checks)
+        # हम 'mvn package' का इस्तेमाल करेंगे, 'mvn deploy' का नहीं। 
+        # इसमें किसी टोकन या पासवर्ड की ज़रूरत नहीं है।
+        run: |
+          mvn clean package -DskipTests assembly:single
+        working-directory: . # मेन फोल्डर से रन होगा
+
+      - name: Get the JAR file
+        uses: actions/upload-artifact@v4
+        with:
+          name: symja-uber-jar
+          # यह जार फाइल इस लोकेशन पर बनेगी
+          path: "**/target/*-jar-with-dependencies.jar"
