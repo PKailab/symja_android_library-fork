@@ -1,53 +1,45 @@
 name: Generate-Super-Scientific-Atomic-JAR
 on:
-  workflow_dispatch: 
+  workflow_dispatch:
 
 jobs:
   forge_process:
     runs-on: ubuntu-latest
     steps:
-      - name: Stage 0 (Environment Gear-up)
-        uses: id/checkout@main
-      
+      - uses: actions/checkout@v4
 
-      - name: Prep JDB-3.0 Engine (Powerful JDK Engine)
-        uses: actions/setup-java@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'microsoft'
 
-      - name: Constructor (Fresh Shadow Engine Building) 🪐
-        run: |
+      - run: |
           cat <<EOF > builder.gradle
-          plugins { id 'java-library'; id 'com.gradleup.shadow' version '8.3.4' }
-          
-          repositories { mavenCentral(); google(); maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' } }
-
-          dependencies {
-            
-              implementation group: 'org.matheclipse', name: 'matheclipse-core', version: '3.1.x-CHANGE-THIS-TO-LATEST.SNAP'
-              implementation 'org.hipparchus:hipparchus-core:4.1'
-              implementation 'org.apfloat:apfloat:2.0.1' 
-              implementation('com.google.guava:guava:34.0.0-android') {
-                  changing = true //
-              }
-              runtimeOnly 'com.celeral:log4j-android-api:最新.3.X'
+          plugins {
+              id 'java-library'
+              id 'com.gradleup.shadow' version '8.3.4'
           }
-          
-          tasks.withType(JavaCompile) { sourceCompatibility = JavaVersion.VERSION_21; targetCompatibility = JavaVersion.VERSION_21 }
-          
+          repositories {
+              mavenCentral()
+              google()
+              maven { url 'https://oss.sonatype.org/content/repositories/snapshots/' }
+          }
+          dependencies {
+              implementation 'org.matheclipse:matheclipse-core:3.2.0'
+              implementation 'org.hipparchus:hipparchus-core:4.1'
+              implementation 'org.apfloat:apfloat:2.0.1'
+              implementation 'com.google.guava:guava:33.3.1-android'
+              runtimeOnly 'com.celeral:log4j-android-api:1.0.0'
+          }
           shadowJar {
               zip64 true
-              mergeServiceFiles() 
+              mergeServiceFiles()
               archiveFileName = 'MASTER-COMMAND-MATH-3-6-NEW.jar'
-              // पक्का सुरक्षा के लिए क्लासेस शेडिंग
-              relocate 'org.apache.log4j', 'shadowsite.mathplugin.logger'
           }
           EOF
           gradle shadowJar -b builder.gradle
 
-      - name: Shipment Delivered! (Action Result📦)
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
-          name: MATH-LEGACYXx-POWERED-JAR
+          name: MATH-LEGACY-POWERED-JAR
           path: build/libs/*.jar
